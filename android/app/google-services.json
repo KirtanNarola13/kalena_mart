@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "652023040535",
+    "project_id": "kalena-mart-f7f52",
+    "storage_bucket": "kalena-mart-f7f52.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652023040535:android:092b916dc2ae0f2f3b6a52",
+        "android_client_info": {
+          "package_name": "com.example.kalena_mart"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgV3LDU9Ljbxyfs9-f5FrCy01wJ1Ybrm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
