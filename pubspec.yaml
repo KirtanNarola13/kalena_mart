@@ -37,6 +37,16 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_auth :
   firebase_core :
+  cloud_firestore: ^4.17.2
+  flutter_svg_provider: ^1.0.7
+  google_fonts: ^6.2.1
+  get: ^4.6.6
+  google_sign_in:
+  animate_do:
+  cherry_toast:
+  google_nav_bar: ^5.0.6
+  line_icons: ^2.0.3
+
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +74,8 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
