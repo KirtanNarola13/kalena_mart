@@ -47,6 +47,22 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    int quantity = 1;
+
+    void _incrementQuantity() {
+      setState(() {
+        quantity++;
+      });
+    }
+
+    void _decrementQuantity() {
+      if (quantity > 1) {
+        setState(() {
+          quantity--;
+        });
+      }
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButton: Visibility(
