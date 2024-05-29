@@ -46,6 +46,9 @@ dependencies:
   cherry_toast:
   google_nav_bar: ^5.0.6
   line_icons: ^2.0.3
+  custom_navigation_bar: ^0.8.2
+  iconsax: ^0.0.8
+  
 
 
 dev_dependencies:

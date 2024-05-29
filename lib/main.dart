@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kalena_mart/modules/screens/detail_screen.dart';
-import 'package:kalena_mart/modules/screens/home_page.dart';
+import 'package:kalena_mart/modules/screens/home-screen/view/home_page.dart';
+import 'package:kalena_mart/modules/screens/navbar/navbar.dart';
 import 'package:kalena_mart/modules/screens/sign-up-screen/views/sign-up-screen.dart';
 import 'firebase_options.dart';
 import 'modules/screens/login-screen/view/login-screen.dart';
@@ -37,6 +38,11 @@ void main() async {
           name: '/signup',
           page: () => SignUpScreen(),
         ),
+        GetPage(
+          name: '/navbar',
+          page: () => NavBar(),
+        ),
+
         GetPage(
           name: '/home',
           page: () => HomePage(),

@@ -48,7 +48,7 @@ login(
       title: const Text("Login Failed"),
     ).show(context);
   } else {
-    Get.offAllNamed('/home');
+    Get.offAllNamed('/navbar');
     FireStoreHelper.fireStoreHelper.addUser();
   }
 }
