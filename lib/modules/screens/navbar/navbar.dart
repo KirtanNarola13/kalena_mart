@@ -5,6 +5,8 @@ import 'package:kalena_mart/modules/screens/favorite-screen/view/favorite.dart';
 import 'package:kalena_mart/modules/screens/home-screen/view/home_page.dart';
 import 'package:kalena_mart/modules/screens/profile-screen/view/profile.dart';
 
+import '../my-order-screen/view/myOrderScreen.dart';
+
 class NavBar extends StatefulWidget {
   const NavBar({Key? key});
 
@@ -31,9 +33,10 @@ class _NavBarState extends State<NavBar> {
         },
         destinations: const [
           NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
-          NavigationDestination(icon: Icon(Iconsax.heart), label: 'Favorite'),
           NavigationDestination(
-              icon: Icon(Iconsax.shopping_bag), label: 'Cart'),
+              icon: Icon(Iconsax.shopping_cart), label: 'Cart'),
+          NavigationDestination(
+              icon: Icon(Iconsax.shopping_bag), label: 'Order'),
           NavigationDestination(
               icon: Icon(Iconsax.personalcard), label: 'Profile'),
         ],
@@ -48,8 +51,8 @@ class NavigationController {
 
   final screens = <Widget>[
     const HomePage(),
-    FavoriteScreen(),
     CartScreen(),
+    MyOrderScreen(),
     ProfileScreen(),
   ];
 }

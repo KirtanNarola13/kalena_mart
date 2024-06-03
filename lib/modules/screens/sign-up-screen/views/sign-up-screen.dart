@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:kalena_mart/modules/screens/address-screen/view/address_screen.dart';
 
 import '../../login-screen/controller/login-controller.dart';
 import '../../login-screen/view/constant/const.dart';
@@ -169,9 +170,12 @@ class SignUpScreen extends StatelessWidget {
                                 email: s_emailCon.text,
                                 password: s_passCon.text,
                               );
+
                               s_emailCon.clear();
                               s_passCon.clear();
                               s_conPassCon.clear();
+
+                              Get.to(AddressScreen());
                             } else {}
                           },
                           child: GetBuilder<LoginController>(

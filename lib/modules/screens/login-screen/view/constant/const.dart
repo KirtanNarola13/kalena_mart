@@ -58,7 +58,7 @@ google() async {
   if (res['error'] != null) {
     return log('login failed');
   } else {
-    Get.offAllNamed('/home');
+    Get.offAllNamed('/navbar');
     FireStoreHelper.fireStoreHelper.addUser();
   }
 }
