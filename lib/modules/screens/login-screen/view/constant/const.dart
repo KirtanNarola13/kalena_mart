@@ -1,10 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:developer';
+
 import 'package:cherry_toast/cherry_toast.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kalena_mart/modules/screens/address-screen/view/address_screen.dart';
 
 import '../../../../../utils/auth-helper.dart';
 import '../../../../../utils/firestore_helper.dart';
@@ -31,7 +32,7 @@ signUp({required String email, required String password}) async {
   } else {
     log('user created');
 
-    Get.toNamed('/login');
+    Get.to(AddressScreen());
   }
 }
 

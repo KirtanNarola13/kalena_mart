@@ -1,9 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kalena_mart/utils/firestore_helper.dart';
 import 'package:kalena_mart/utils/model/cart_modal.dart';
 import 'package:line_icons/line_icons.dart';
-
-import '../../utils/globle.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
@@ -15,9 +14,6 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
-    final PageController pageController = PageController(
-      viewportFraction: 0.9, // Adjust this value as needed
-    );
     Map<String, dynamic> data =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     double height = MediaQuery.of(context).size.height;
@@ -55,35 +51,105 @@ class _DetailPageState extends State<DetailPage> {
                         letterSpacing: 5,
                       ),
                     ),
-                    Stack(
-                      alignment: const Alignment(0.5, 1.8),
-                      children: [
-                        IconButton(
-                          splashRadius: 20,
-                          onPressed: () {},
-                          icon: Icon(
-                            LineIcons.shoppingBag,
-                            color: Colors.grey.shade700,
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          height: height / 30,
-                          width: width / 30,
-                          decoration: const BoxDecoration(
-                            color: Colors.grey,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Text(
-                            "${cartList.length}",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 10,
+                    StreamBuilder(
+                      stream:
+                          FireStoreHelper.fireStoreHelper.fetchCartProdutcs(),
+                      builder: (context, snapshot) {
+                        QuerySnapshot<Map<String, dynamic>>? querySnapshot =
+                            snapshot.data;
+                        List<QueryDocumentSnapshot<Map<String, dynamic>>>
+                            cartList = querySnapshot?.docs ?? [];
+                        if (snapshot.hasError) {
+                          return Stack(
+                            alignment: const Alignment(0.5, 1.8),
+                            children: [
+                              IconButton(
+                                splashRadius: 20,
+                                onPressed: () {},
+                                icon: Icon(
+                                  LineIcons.shoppingBag,
+                                  color: Colors.grey.shade700,
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                height: height / 30,
+                                width: width / 30,
+                                decoration: const BoxDecoration(
+                                  color: Colors.grey,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Text(
+                                  "${cartList.length}",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        } else if (snapshot.hasData) {
+                          return Stack(
+                            alignment: const Alignment(0.5, 1.8),
+                            children: [
+                              IconButton(
+                                splashRadius: 20,
+                                onPressed: () {},
+                                icon: Icon(
+                                  LineIcons.shoppingBag,
+                                  color: Colors.grey.shade700,
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                height: height / 30,
+                                width: width / 30,
+                                decoration: const BoxDecoration(
+                                  color: Colors.grey,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Text(
+                                  "${cartList.length}",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                        return Stack(
+                          alignment: const Alignment(0.5, 1.8),
+                          children: [
+                            IconButton(
+                              splashRadius: 20,
+                              onPressed: () {},
+                              icon: Icon(
+                                LineIcons.shoppingBag,
+                                color: Colors.grey.shade700,
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
+                            Container(
+                              alignment: Alignment.center,
+                              height: height / 30,
+                              width: width / 30,
+                              decoration: const BoxDecoration(
+                                color: Colors.grey,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Transform.scale(
+                                scale: 0.2,
+                                child: const CircularProgressIndicator(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    )
                   ],
                 ),
               ),
@@ -220,43 +286,6 @@ class _DetailPageState extends State<DetailPage> {
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                // data['isLike'] = !data['isLike'];
-                                // favList.add(data);
-                                // setState(() {});
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: height / 0.8,
-                                width: width / 6,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade500.withOpacity(0.3),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(20),
-                                  ),
-                                  border: Border.all(
-                                    color: Colors.grey.shade700,
-                                    width: 2,
-                                  ),
-                                  boxShadow: [
-                                    const BoxShadow(
-                                      color: Colors.grey,
-                                      blurRadius: 10,
-                                      blurStyle: BlurStyle.outer,
-                                    ),
-                                  ],
-                                ),
-                                child: (data['isLike'] == false)
-                                    ? const Icon(LineIcons.heart)
-                                    : Icon(
-                                        Icons.favorite,
-                                        color: Colors.red.withOpacity(
-                                          0.5,
-                                        ),
-                                      ),
                               ),
                             ),
                           ],

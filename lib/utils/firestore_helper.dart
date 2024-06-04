@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:kalena_mart/utils/model/cart_modal.dart';
-import 'package:kalena_mart/utils/model/product_model.dart';
 
 import 'auth-helper.dart';
 
@@ -53,6 +52,17 @@ class FireStoreHelper {
       'number': number,
       'address': address,
     });
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> fetchUserDetail() {
+    // return firestore
+    //     .collection("users")
+    //     .where('uid', isEqualTo: AuthHelper.auth.currentUser?.uid)
+    //     .snapshots();
+    return firestore
+        .collection("users")
+        .doc(AuthHelper.auth.currentUser?.uid)
+        .snapshots();
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> fetchProducts() {

@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:kalena_mart/modules/screens/address-screen/view/address_screen.dart';
+import 'package:kalena_mart/modules/screens/login-screen/view/login-screen.dart';
 
 import '../../login-screen/controller/login-controller.dart';
 import '../../login-screen/view/constant/const.dart';
@@ -245,7 +244,7 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.back();
+                        Get.to(LoginScreen());
                       },
                       child: const Text(
                         'Sign in',

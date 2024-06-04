@@ -1,9 +1,4 @@
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../controller/login-controller.dart';
@@ -19,6 +14,13 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Timer(Duration(seconds: 5), () {
+    //   if (AuthHelper.auth.currentUser != null) {
+    //     Get.offAllNamed('/navbar');
+    //   } else {
+    //     Get.offAllNamed('/signup');
+    //   }
+    // });
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     LoginController loginController = Get.put(LoginController());
