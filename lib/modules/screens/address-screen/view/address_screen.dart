@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kalena_mart/modules/screens/login-screen/view/login-screen.dart';
+import 'package:kalena_mart/utils/auth-helper.dart';
 import 'package:kalena_mart/utils/firestore_helper.dart';
 
 import 'const/address_const.dart';
@@ -118,6 +119,7 @@ class _AddressScreenState extends State<AddressScreen> {
                             if (_addressKey.currentState!.validate()) {
                               FireStoreHelper.fireStoreHelper
                                   .setupAddress(
+                                      uid: AuthHelper.auth.currentUser!.uid,
                                       email: emailController.text,
                                       number: moNumberController.text,
                                       address: addressController.text)

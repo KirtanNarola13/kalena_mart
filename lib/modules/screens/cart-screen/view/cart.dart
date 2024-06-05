@@ -1,10 +1,7 @@
-import 'dart:developer';
-
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:line_icons/line_icons.dart';
+import 'package:kalena_mart/constants/string.dart';
 
 import '../../../../utils/auth-helper.dart';
 import '../../../../utils/firestore_helper.dart';
@@ -163,7 +160,10 @@ class _CartProductState extends State<CartProduct> {
                 ),
               ),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  FireStoreHelper.fireStoreHelper
+                      .removeProductFromCart(widget.cartProduct['id']);
+                },
                 icon: const Icon(
                   Icons.delete_outline,
                   color: Colors.red,
@@ -218,11 +218,13 @@ class _CartScreenState extends State<CartScreen> {
     checkout(BuildContext context) async {
       // Your existing checkout logic
       String userId = AuthHelper.auth.currentUser!.uid;
+
       List<Map<String, dynamic>> cartProducts =
           cart.map((doc) => doc.data()).toList();
       await FireStoreHelper.fireStoreHelper.clearCart(userId);
 
-      await FireStoreHelper.fireStoreHelper.createOrder(userId, cartProducts);
+      await FireStoreHelper.fireStoreHelper.createOrder(userAddress!,
+          int.parse(userNumber!), userEmail!, userId, cartProducts);
 
       // Now you can clear the cart or navigate to the order confirmation screen
       // Clear the cart: Implement clearing logic here
@@ -240,21 +242,20 @@ class _CartScreenState extends State<CartScreen> {
 
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     return Scaffold(
-      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: _cartStream,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          } else if (snapshot.hasData) {
-            cart = snapshot.data!.docs;
-            double totalCartPrice = calculateCartTotal(cart);
+      body: Column(
+        children: [
+          Expanded(
+            flex: 2,
+            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream: _cartStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text(snapshot.error.toString());
+                } else if (snapshot.hasData) {
+                  cart = snapshot.data!.docs;
+                  double totalCartPrice = calculateCartTotal(cart);
 
-            return Stack(
-              alignment: Alignment.bottomRight,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: ListView.builder(
+                  return ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: cart.length,
                     itemBuilder: (context, index) {
@@ -274,80 +275,94 @@ class _CartScreenState extends State<CartScreen> {
                         },
                       );
                     },
+                  );
+                }
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.all(10),
+                  height: height * 0.07,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: 2,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(
+                        15,
+                      ),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: _cartStream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          cart = snapshot.data!.docs;
+                          double totalCartPrice = calculateCartTotal(cart);
+
+                          return Text(
+                            'Total: $totalCartPrice', // Display total cart price
+                            style: const TextStyle(
+                              letterSpacing: 2,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        }
+                        return const SizedBox();
+                      },
+                    ),
                   ),
                 ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.all(10),
-                          height: height * 0.07,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey,
-                              width: 2,
-                            ),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(
-                                15,
-                              ),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Text(
-                              'Total: $totalCartPrice', // Display total cart price
-                              style: const TextStyle(
-                                letterSpacing: 2,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    AssetsAudioPlayer.newPlayer().open(
+                      Audio("assets/sound/order-comformation-sound.mp3"),
+                      autoStart: true,
+                      volume: 1,
+                    );
+                    checkout(context);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.all(10),
+                    height: height * 0.07,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(
+                          15,
                         ),
                       ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            checkout(context);
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.all(10),
-                            height: height * 0.07,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade300,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(
-                                  15,
-                                ),
-                              ),
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Checkout", // Display total cart price
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  letterSpacing: 2,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text(
+                        "Checkout", // Display total cart price
+                        style: TextStyle(
+                          fontSize: 16,
+                          letterSpacing: 2,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ],
-            );
-          }
-          return const Center(child: CircularProgressIndicator());
-        },
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

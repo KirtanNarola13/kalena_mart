@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kalena_mart/constants/string.dart';
 import 'package:kalena_mart/utils/firestore_helper.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -95,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               .auth.currentUser?.photoURL ==
                                           null)
                                       ? const NetworkImage(
-                                          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+                                          "https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=")
                                       : NetworkImage(
                                           "${AuthHelper.auth.currentUser?.photoURL}"),
                                 ),
@@ -201,7 +202,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          "${user['email']}",
+                                          "$userEmail",
                                           style: TextStyle(
                                             fontSize: 15,
                                             color: Colors.grey.shade700,
@@ -267,7 +268,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          "+91 ${user['number']}",
+                                          "+91 $userNumber",
                                           style: TextStyle(
                                             fontSize: 15,
                                             color: Colors.grey.shade700,
@@ -284,7 +285,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Container(
                           margin: const EdgeInsets.only(top: 20),
                           padding: const EdgeInsets.all(10),
-                          height: height * 0.09,
+                          height: height * 0.13,
                           width: width / 1.1,
                           decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(
@@ -332,11 +333,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                       ),
                                       Expanded(
-                                        child: Text(
-                                          "${user['address']}",
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.grey.shade700,
+                                        child: Container(
+                                          height: height * 0.3,
+                                          child: Text(
+                                            "${userAddress}",
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.grey.shade700,
+                                            ),
                                           ),
                                         ),
                                       ),

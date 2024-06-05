@@ -2,14 +2,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kalena_mart/modules/screens/address-screen/view/address_screen.dart';
 import 'package:kalena_mart/modules/screens/detail_screen.dart';
 import 'package:kalena_mart/modules/screens/home-screen/view/home_page.dart';
 import 'package:kalena_mart/modules/screens/navbar/navbar.dart';
 import 'package:kalena_mart/modules/screens/sign-up-screen/views/sign-up-screen.dart';
+
 import 'firebase_options.dart';
 import 'modules/screens/login-screen/view/login-screen.dart';
-import 'modules/screens/one-time-intro/view/one-time-intro.dart';
+import 'modules/screens/splash-screen/view/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,16 +23,16 @@ void main() async {
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
       getPages: [
-        // GetPage(
-        //   name: '/',
-        //   page: () => const SplashScreen(),
-        // ),
+        GetPage(
+          name: '/',
+          page: () => const SplashScreen(),
+        ),
         // GetPage(
         //   name: '/',
         //   page: () => IntroScreen(),
         // ),
         GetPage(
-          name: '/',
+          name: '/login',
           page: () => LoginScreen(),
         ),
         GetPage(

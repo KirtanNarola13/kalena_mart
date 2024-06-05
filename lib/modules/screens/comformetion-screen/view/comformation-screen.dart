@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:kalena_mart/modules/screens/home-screen/view/home_page.dart';
 import 'package:kalena_mart/modules/screens/navbar/navbar.dart';
 
 class ConfirmationScreen extends StatefulWidget {
@@ -16,6 +15,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
   void initState() {
     super.initState();
     // After a certain duration, navigate to the home screen
+
     Timer(Duration(seconds: 2), () {
       Navigator.pushAndRemoveUntil(
         context,
@@ -30,9 +30,9 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
-        child: Image.network(
-            'https://aogdesign.com.au/wp-content/uploads/2019/02/checkmark.gif'),
+        child: Image.asset('assets/order-comfrom.gif'),
       ),
     );
   }

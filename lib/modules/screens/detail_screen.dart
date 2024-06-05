@@ -1,5 +1,7 @@
+import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kalena_mart/utils/firestore_helper.dart';
 import 'package:kalena_mart/utils/model/cart_modal.dart';
 import 'package:line_icons/line_icons.dart';
@@ -65,7 +67,9 @@ class _DetailPageState extends State<DetailPage> {
                             children: [
                               IconButton(
                                 splashRadius: 20,
-                                onPressed: () {},
+                                onPressed: () {
+                                  Get.toNamed('/cart');
+                                },
                                 icon: Icon(
                                   LineIcons.shoppingBag,
                                   color: Colors.grey.shade700,
@@ -243,6 +247,9 @@ class _DetailPageState extends State<DetailPage> {
                           children: [
                             GestureDetector(
                               onTap: () {
+                                CherryToast.success(
+                                  title: Text("Product Added"),
+                                ).show(context);
                                 CartModal cartModal = CartModal(
                                   name: data['name'],
                                   price: data['price'],

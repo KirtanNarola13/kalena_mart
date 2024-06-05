@@ -34,21 +34,16 @@ class FireStoreHelper {
   }
 
   Future<void> setupAddress(
-      {required String email,
+      {required String uid,
+      required String email,
       required String number,
       required String address}) async {
     return firestore
-        .collection("users")
+        .collection("addresses")
         .doc(AuthHelper.auth.currentUser?.uid)
         .set({
-      'name': (AuthHelper.auth.currentUser?.displayName == null)
-          ? "${AuthHelper.auth.currentUser?.email?.split("@")[0].capitalizeFirst}"
-          : "${AuthHelper.auth.currentUser?.displayName}",
       'email': "${AuthHelper.auth.currentUser?.email}",
       'uid': "${AuthHelper.auth.currentUser?.uid}",
-      'dp': (AuthHelper.auth.currentUser?.photoURL == null)
-          ? "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
-          : AuthHelper.auth.currentUser?.photoURL,
       'number': number,
       'address': address,
     });
@@ -61,6 +56,17 @@ class FireStoreHelper {
     //     .snapshots();
     return firestore
         .collection("users")
+        .doc(AuthHelper.auth.currentUser?.uid)
+        .snapshots();
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> fetchAddress() {
+    // return firestore
+    //     .collection("users")
+    //     .where('uid', isEqualTo: AuthHelper.auth.currentUser?.uid)
+    //     .snapshots();
+    return firestore
+        .collection("addresses")
         .doc(AuthHelper.auth.currentUser?.uid)
         .snapshots();
   }
@@ -78,19 +84,46 @@ class FireStoreHelper {
   }
 
   Future<void> cartProduct(CartModal cartModal) async {
-    await firestore
-        .collection("users")
-        .doc(AuthHelper.auth.currentUser?.uid)
-        .collection('cart')
-        .add({
-      'name': cartModal.name,
-      'price': cartModal.price,
-      'mrp': cartModal.mrp,
-      'image': cartModal.image,
-      'description': cartModal.description,
-      'quantity': 1
-    });
-    log("product added to cart");
+    try {
+      DocumentReference documentReference = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(AuthHelper.auth.currentUser?.uid)
+          .collection('cart')
+          .add({
+        'id': '', // Placeholder for doc ID
+        'name': cartModal.name,
+        'price': cartModal.price,
+        'mrp': cartModal.mrp,
+        'image': cartModal.image,
+        'description': cartModal.description,
+        'quantity': 1
+      });
+
+      // Update the 'id' field with the doc ID
+      await documentReference.update({'id': documentReference.id});
+
+      log("Product added to cart with ID: ${documentReference.id}");
+    } catch (e) {
+      log("Error adding product to cart: $e");
+    }
+  }
+
+  Future<void> removeProductFromCart(String productId) async {
+    try {
+      // Get a reference to the product document using the provided product ID
+      DocumentReference productReference = FirebaseFirestore.instance
+          .collection("users")
+          .doc(AuthHelper.auth.currentUser?.uid)
+          .collection('cart')
+          .doc(productId);
+
+      // Delete the product document
+      await productReference.delete();
+
+      log("Product removed from cart with ID: $productId");
+    } catch (e) {
+      log("Error removing product from cart: $e");
+    }
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> fetchCartProdutcs() {
@@ -99,15 +132,6 @@ class FireStoreHelper {
         .doc(AuthHelper.auth.currentUser?.uid)
         .collection('cart')
         .snapshots();
-  }
-
-  Future<void> removeCartProdcut(String uid) async {
-    await firestore
-        .collection("users")
-        .doc(AuthHelper.auth.currentUser?.uid)
-        .collection('cart')
-        .doc(uid)
-        .delete();
   }
 
   Future<void> clearCart(String userId) async {
@@ -130,9 +154,15 @@ class FireStoreHelper {
     }
   }
 
-  Future<void> createOrder(
+  Future<void> createOrder(String address, int number, String email,
       String userId, List<Map<String, dynamic>> cartProducts) async {
     CollectionReference orders = firestore.collection('orders');
-    await orders.add({'userId': userId, 'products': cartProducts});
+    await orders.add({
+      'address': address,
+      'number': number,
+      'email': email,
+      'userId': userId,
+      'products': cartProducts,
+    });
   }
 }

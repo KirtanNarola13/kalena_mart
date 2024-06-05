@@ -48,6 +48,7 @@ dependencies:
   line_icons: ^2.0.3
   custom_navigation_bar: ^0.8.2
   iconsax: ^0.0.8
+  assets_audio_player: ^3.1.1
   
 
 
