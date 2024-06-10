@@ -167,4 +167,13 @@ class FireStoreHelper {
           "${AuthHelper.auth.currentUser?.email?.split("@")[0].capitalizeFirst}"
     });
   }
+
+  Future<void> changeAddress({required String address}) async {
+    await firestore
+        .collection("addresses")
+        .doc(AuthHelper.auth.currentUser?.uid)
+        .update({
+      'address': address,
+    });
+  }
 }

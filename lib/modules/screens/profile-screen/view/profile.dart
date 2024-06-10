@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kalena_mart/constants/string.dart';
+import 'package:kalena_mart/modules/screens/address-screen/view/const/address_const.dart';
 import 'package:kalena_mart/utils/firestore_helper.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -23,6 +24,76 @@ class _ProfileScreenState extends State<ProfileScreen> {
     logout() {
       AuthHelper.authHelper.signOut();
       Get.toNamed('/login');
+    }
+
+    void _showChangePhoneNumberDialog() {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Edit Phone Number"),
+            content: Container(
+              height: height * 0.3,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: moNumberController,
+                    decoration: InputDecoration(
+                      labelText: 'New Phone Number',
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      // _updatePhoneNumber(phoneNumberController.text);
+                      Navigator.pop(context); // Close the dialog
+                    },
+                    child: Text("Update"),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
+
+    void _showChangeAddressDialog() {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Edit Address"),
+            content: Container(
+              height: height * 0.3,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: addressController,
+                    decoration: InputDecoration(
+                      labelText: 'New Address',
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      FireStoreHelper.fireStoreHelper
+                          .changeAddress(address: addressController.text)
+                          .then(
+                            (value) =>
+                                FireStoreHelper.fireStoreHelper.fetchAddress(),
+                          );
+                      setState(() {});
+                      Navigator.pop(context); // Close the dialog
+                    },
+                    child: Text("Update"),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
     }
 
     return StreamBuilder(
@@ -164,7 +235,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Expanded(
                                 child: Container(
-                                  margin: EdgeInsets.all(5),
+                                  margin: const EdgeInsets.all(5),
                                   alignment: Alignment.center,
                                   decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.all(
@@ -230,7 +301,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Expanded(
                                 child: Container(
-                                  margin: EdgeInsets.all(5),
+                                  margin: const EdgeInsets.all(5),
                                   alignment: Alignment.center,
                                   decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.all(
@@ -256,7 +327,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Expanded(
+                                      Expanded(
                                         child: Text(
                                           "Mobile",
                                           style: TextStyle(
@@ -296,7 +367,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Expanded(
                                 child: Container(
-                                  margin: EdgeInsets.all(5),
+                                  margin: const EdgeInsets.all(5),
                                   alignment: Alignment.center,
                                   decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.all(
@@ -322,21 +393,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Expanded(
-                                        child: Text(
-                                          "Address",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                            letterSpacing: 1.5,
-                                          ),
+                                      Expanded(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const Text(
+                                              "Address",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                                letterSpacing: 1.5,
+                                              ),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                _showChangeAddressDialog();
+                                              },
+                                              icon: const Icon(
+                                                Icons.edit,
+                                                size: 18,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       Expanded(
                                         child: Container(
                                           height: height * 0.3,
                                           child: Text(
-                                            "${userAddress}",
+                                            "${addressController.text}",
                                             style: TextStyle(
                                               fontSize: 15,
                                               color: Colors.grey.shade700,
