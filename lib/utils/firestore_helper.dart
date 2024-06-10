@@ -163,6 +163,8 @@ class FireStoreHelper {
       'email': email,
       'userId': userId,
       'products': cartProducts,
+      'name':
+          "${AuthHelper.auth.currentUser?.email?.split("@")[0].capitalizeFirst}"
     });
   }
 }

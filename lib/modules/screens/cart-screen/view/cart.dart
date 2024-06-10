@@ -1,6 +1,7 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kalena_mart/constants/string.dart';
 
 import '../../../../utils/auth-helper.dart';
@@ -242,6 +243,17 @@ class _CartScreenState extends State<CartScreen> {
 
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Cart",
+          style: GoogleFonts.raleway().copyWith(
+            letterSpacing: 1.5,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       body: Column(
         children: [
           Expanded(

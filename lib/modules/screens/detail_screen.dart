@@ -53,47 +53,92 @@ class _DetailPageState extends State<DetailPage> {
                         letterSpacing: 5,
                       ),
                     ),
-                    StreamBuilder(
-                      stream:
-                          FireStoreHelper.fireStoreHelper.fetchCartProdutcs(),
-                      builder: (context, snapshot) {
-                        QuerySnapshot<Map<String, dynamic>>? querySnapshot =
-                            snapshot.data;
-                        List<QueryDocumentSnapshot<Map<String, dynamic>>>
-                            cartList = querySnapshot?.docs ?? [];
-                        if (snapshot.hasError) {
-                          return Stack(
-                            alignment: const Alignment(0.5, 1.8),
-                            children: [
-                              IconButton(
-                                splashRadius: 20,
-                                onPressed: () {
-                                  Get.toNamed('/cart');
-                                },
-                                icon: Icon(
-                                  LineIcons.shoppingBag,
-                                  color: Colors.grey.shade700,
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                height: height / 30,
-                                width: width / 30,
-                                decoration: const BoxDecoration(
-                                  color: Colors.grey,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Text(
-                                  "${cartList.length}",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed('/cart');
+                      },
+                      child: StreamBuilder(
+                        stream:
+                            FireStoreHelper.fireStoreHelper.fetchCartProdutcs(),
+                        builder: (context, snapshot) {
+                          QuerySnapshot<Map<String, dynamic>>? querySnapshot =
+                              snapshot.data;
+                          List<QueryDocumentSnapshot<Map<String, dynamic>>>
+                              cartList = querySnapshot?.docs ?? [];
+                          if (snapshot.hasError) {
+                            return Stack(
+                              alignment: const Alignment(0.5, 1.8),
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    Get.toNamed('/cart');
+                                  },
+                                  icon: Icon(
+                                    LineIcons.shoppingBag,
+                                    color: Colors.grey.shade700,
                                   ),
                                 ),
-                              ),
-                            ],
-                          );
-                        } else if (snapshot.hasData) {
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed('/cart');
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: height / 30,
+                                    width: width / 30,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.grey,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Text(
+                                      "${cartList.length}",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          } else if (snapshot.hasData) {
+                            return Stack(
+                              alignment: const Alignment(0.5, 1),
+                              children: [
+                                IconButton(
+                                  splashRadius: 20,
+                                  onPressed: () {
+                                    Get.toNamed('/cart');
+                                  },
+                                  icon: Icon(
+                                    LineIcons.shoppingBag,
+                                    color: Colors.grey.shade700,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed('/cart');
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: height / 30,
+                                    width: width / 30,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.grey,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Text(
+                                      "${cartList.length}",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
                           return Stack(
                             alignment: const Alignment(0.5, 1.8),
                             children: [
@@ -113,46 +158,17 @@ class _DetailPageState extends State<DetailPage> {
                                   color: Colors.grey,
                                   shape: BoxShape.circle,
                                 ),
-                                child: Text(
-                                  "${cartList.length}",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
+                                child: Transform.scale(
+                                  scale: 0.2,
+                                  child: const CircularProgressIndicator(
+                                    color: Colors.black,
                                   ),
                                 ),
                               ),
                             ],
                           );
-                        }
-                        return Stack(
-                          alignment: const Alignment(0.5, 1.8),
-                          children: [
-                            IconButton(
-                              splashRadius: 20,
-                              onPressed: () {},
-                              icon: Icon(
-                                LineIcons.shoppingBag,
-                                color: Colors.grey.shade700,
-                              ),
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              height: height / 30,
-                              width: width / 30,
-                              decoration: const BoxDecoration(
-                                color: Colors.grey,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Transform.scale(
-                                scale: 0.2,
-                                child: const CircularProgressIndicator(
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
+                        },
+                      ),
                     )
                   ],
                 ),
@@ -248,7 +264,7 @@ class _DetailPageState extends State<DetailPage> {
                             GestureDetector(
                               onTap: () {
                                 CherryToast.success(
-                                  title: Text("Product Added"),
+                                  title: const Text("Product Added"),
                                 ).show(context);
                                 CartModal cartModal = CartModal(
                                   name: data['name'],

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kalena_mart/modules/screens/cart-screen/view/cart.dart';
 import 'package:kalena_mart/modules/screens/detail_screen.dart';
 import 'package:kalena_mart/modules/screens/home-screen/view/home_page.dart';
 import 'package:kalena_mart/modules/screens/navbar/navbar.dart';
@@ -51,6 +52,10 @@ void main() async {
         GetPage(
           name: '/detail',
           page: () => DetailPage(),
+        ),
+        GetPage(
+          name: '/cart',
+          page: () => CartScreen(),
         ),
       ],
     ),
