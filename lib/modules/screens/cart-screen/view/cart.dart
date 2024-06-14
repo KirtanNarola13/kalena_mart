@@ -236,7 +236,7 @@ class _CartScreenState extends State<CartScreen> {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              ConfirmationScreen(), // Create ConfirmationScreen widget
+              const ConfirmationScreen(), // Create ConfirmationScreen widget
         ),
       );
     }
