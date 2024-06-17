@@ -106,6 +106,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           } else if (snapshot.hasData) {
             DocumentSnapshot<Map<String, dynamic>>? data = snapshot.data;
             Map<String, dynamic> user = data?.data() ?? {};
+            userAddress = user['address'];
+            userNumber = user['number'];
+            userEmail = user['email'];
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
