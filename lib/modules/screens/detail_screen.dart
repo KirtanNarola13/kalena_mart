@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +17,22 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   @override
+
+  @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> data =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    List args = ModalRoute.of(context)!.settings.arguments as List;
+    Map<String, dynamic> data = {
+      'image' : args[0],
+      'name' : args[1],
+      'price' : args[2],
+      'mrp' : args[3],
+      'description' : args[4],
+    };
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+
+
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -59,12 +72,13 @@ class _DetailPageState extends State<DetailPage> {
                       },
                       child: StreamBuilder(
                         stream:
-                            FireStoreHelper.fireStoreHelper.fetchCartProdutcs(),
+                            FireStoreHelper.fireStoreHelper.fetchCartProducts(),
                         builder: (context, snapshot) {
                           QuerySnapshot<Map<String, dynamic>>? querySnapshot =
                               snapshot.data;
                           List<QueryDocumentSnapshot<Map<String, dynamic>>>
                               cartList = querySnapshot?.docs ?? [];
+
                           if (snapshot.hasError) {
                             return Stack(
                               alignment: const Alignment(0.5, 1.8),
@@ -181,7 +195,7 @@ class _DetailPageState extends State<DetailPage> {
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(data['image']),
+                    image: NetworkImage("${data['image']}"),
                   ),
                   borderRadius: const BorderRadius.all(
                     Radius.circular(20),

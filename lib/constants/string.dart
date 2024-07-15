@@ -1,3 +1,3 @@
-String? userAddress;
-String? userEmail;
-String? userNumber;
+String? userAddress = "";
+String? userEmail = "";
+String userNumber = "";

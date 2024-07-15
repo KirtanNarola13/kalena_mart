@@ -196,7 +196,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> _fetchCartProducts() {
-    return FireStoreHelper.fireStoreHelper.fetchCartProdutcs();
+    return FireStoreHelper.fireStoreHelper.fetchCartProducts();
   }
 
   double calculateCartTotal(

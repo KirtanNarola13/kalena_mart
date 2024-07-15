@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -106,9 +108,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           } else if (snapshot.hasData) {
             DocumentSnapshot<Map<String, dynamic>>? data = snapshot.data;
             Map<String, dynamic> user = data?.data() ?? {};
-            userAddress = user['address'];
-            userNumber = user['number'];
-            userEmail = user['email'];
+            String userAddress = user['address'] ?? '';
+            String userEmail = user['email'] ?? '';
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -295,7 +296,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Container(
                             margin: const EdgeInsets.only(top: 20),
                             padding: const EdgeInsets.all(10),
-                            height: height * 0.09,
+                            height: height * 0.13,
                             width: width / 1.1,
                             decoration: const BoxDecoration(
                               borderRadius: BorderRadius.all(
@@ -315,7 +316,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       color: Colors.white,
                                     ),
                                     child: const Icon(
-                                      LineIcons.phone,
+                                      LineIcons.home,
                                       size: 35,
                                       color: Colors.grey,
                                     ),
@@ -328,26 +329,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         left: 10, top: 5, bottom: 5),
                                     child: Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceAround,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
-                                        const Expanded(
-                                          child: Text(
-                                            "Mobile",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
-                                              letterSpacing: 1.5,
-                                            ),
+                                        Expanded(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment
+                                                .spaceBetween,
+                                            children: [
+                                              const Text(
+                                                "Address",
+                                                style: TextStyle(
+                                                  fontWeight:
+                                                  FontWeight.bold,
+                                                  fontSize: 16,
+                                                  letterSpacing: 1.5,
+                                                ),
+                                              ),
+                                              IconButton(
+                                                onPressed: () {
+                                                  _showChangeAddressDialog();
+                                                },
+                                                icon: const Icon(
+                                                  Icons.edit,
+                                                  size: 18,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                         Expanded(
-                                          child: Text(
-                                            "+91 $userNumber",
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.grey.shade700,
+                                          child: Container(
+                                            height: height * 0.3,
+                                            child: Text(
+                                              "${userAddress}",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color:
+                                                Colors.grey.shade700,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -358,103 +380,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ],
                             ),
                           ),
-                          StreamBuilder(
-                              stream: FireStoreHelper.fireStoreHelper
-                                  .fetchAddress(),
-                              builder: (context, snapshot) {
-                                Map<String, dynamic> user =
-                                    snapshot.data?.data() ?? {};
-                                userAddress = user['address'];
-                                userEmail = user['email'];
-                                userNumber = user['number'];
-                                return Container(
-                                  margin: const EdgeInsets.only(top: 20),
-                                  padding: const EdgeInsets.all(10),
-                                  height: height * 0.13,
-                                  width: width / 1.1,
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(15),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          margin: const EdgeInsets.all(5),
-                                          alignment: Alignment.center,
-                                          decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(10),
-                                            ),
-                                            color: Colors.white,
-                                          ),
-                                          child: const Icon(
-                                            LineIcons.home,
-                                            size: 35,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 4,
-                                        child: Container(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, top: 5, bottom: 5),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Expanded(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    const Text(
-                                                      "Address",
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 16,
-                                                        letterSpacing: 1.5,
-                                                      ),
-                                                    ),
-                                                    IconButton(
-                                                      onPressed: () {
-                                                        _showChangeAddressDialog();
-                                                      },
-                                                      icon: const Icon(
-                                                        Icons.edit,
-                                                        size: 18,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Container(
-                                                  height: height * 0.3,
-                                                  child: Text(
-                                                    "${userAddress}",
-                                                    style: TextStyle(
-                                                      fontSize: 15,
-                                                      color:
-                                                          Colors.grey.shade700,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }),
+
                         ],
                       ),
                     ),

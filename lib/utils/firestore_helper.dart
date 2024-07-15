@@ -3,24 +3,20 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:kalena_mart/utils/model/cart_modal.dart';
+import 'package:kalena_mart/utils/string_extension.dart';
 
 import 'auth-helper.dart';
 
 class FireStoreHelper {
-  //singleTurn
+  // Singleton pattern
   FireStoreHelper._();
-
   static final FireStoreHelper fireStoreHelper = FireStoreHelper._();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  //AddUser
-
+  // Add User
   Future<void> addUser() async {
     log("Execute");
-    await firestore
-        .collection("users")
-        .doc(AuthHelper.auth.currentUser?.uid)
-        .set({
+    await firestore.collection("users").doc(AuthHelper.auth.currentUser?.uid).set({
       'name': (AuthHelper.auth.currentUser?.displayName == null)
           ? "${AuthHelper.auth.currentUser?.email?.split("@")[0].capitalizeFirst}"
           : "${AuthHelper.auth.currentUser?.displayName}",
@@ -33,15 +29,8 @@ class FireStoreHelper {
     log("User Added");
   }
 
-  Future<void> setupAddress(
-      {required String uid,
-      required String email,
-      required String number,
-      required String address}) async {
-    return firestore
-        .collection("addresses")
-        .doc(AuthHelper.auth.currentUser?.uid)
-        .set({
+  Future<void> setupAddress({required String uid, required String email, required String number, required String address}) async {
+    return firestore.collection("addresses").doc(AuthHelper.auth.currentUser?.uid).set({
       'email': "${AuthHelper.auth.currentUser?.email}",
       'uid': "${AuthHelper.auth.currentUser?.uid}",
       'number': number,
@@ -50,36 +39,21 @@ class FireStoreHelper {
   }
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> fetchUserDetail() {
-    // return firestore
-    //     .collection("users")
-    //     .where('uid', isEqualTo: AuthHelper.auth.currentUser?.uid)
-    //     .snapshots();
-    return firestore
-        .collection("users")
-        .doc(AuthHelper.auth.currentUser?.uid)
-        .snapshots();
+    return firestore.collection("users").doc(AuthHelper.auth.currentUser?.uid).snapshots();
   }
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> fetchAddress() {
-    // return firestore
-    //     .collection("users")
-    //     .where('uid', isEqualTo: AuthHelper.auth.currentUser?.uid)
-    //     .snapshots();
-    return firestore
-        .collection("addresses")
-        .doc(AuthHelper.auth.currentUser?.uid)
-        .snapshots();
+    return firestore.collection("addresses").doc(AuthHelper.auth.currentUser?.uid).snapshots();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> fetchProducts() {
-    return firestore.collection('products').snapshots();
-  }
+
+
+
+
+
+
 
   Stream<QuerySnapshot<Map<String, dynamic>>> fetchOrders() {
-    return firestore.collection('orders').snapshots();
-  }
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> fetchorders() {
     return firestore.collection('orders').snapshots();
   }
 
@@ -126,7 +100,7 @@ class FireStoreHelper {
     }
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> fetchCartProdutcs() {
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchCartProducts() {
     return firestore
         .collection("users")
         .doc(AuthHelper.auth.currentUser?.uid)
@@ -154,8 +128,7 @@ class FireStoreHelper {
     }
   }
 
-  Future<void> createOrder(String address, int number, String email,
-      String userId, List<Map<String, dynamic>> cartProducts) async {
+  Future<void> createOrder(String address, int number, String email, String userId, List<Map<String, dynamic>> cartProducts) async {
     CollectionReference orders = firestore.collection('orders');
     await orders.add({
       'address': address,
@@ -163,16 +136,12 @@ class FireStoreHelper {
       'email': email,
       'userId': userId,
       'products': cartProducts,
-      'name':
-          "${AuthHelper.auth.currentUser?.email?.split("@")[0].capitalizeFirst}"
+      'name': "${AuthHelper.auth.currentUser?.email?.split("@")[0].capitalizeFirst}"
     });
   }
 
   Future<void> changeAddress({required String address}) async {
-    await firestore
-        .collection("addresses")
-        .doc(AuthHelper.auth.currentUser?.uid)
-        .update({
+    await firestore.collection("addresses").doc(AuthHelper.auth.currentUser?.uid).update({
       'address': address,
     });
   }
