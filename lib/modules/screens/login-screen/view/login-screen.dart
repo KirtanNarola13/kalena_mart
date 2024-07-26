@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kalena_mart/modules/screens/sign-up-screen/views/sign-up-screen.dart';
 
 import '../controller/login-controller.dart';
 import 'constant/const.dart';
@@ -207,27 +208,43 @@ class LoginScreen extends StatelessWidget {
                       img: 'assets/google.png', context: context)),
             ),
             SizedBox(
-              height: h / 7,
+              height: h / 9,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Don\'t have an account? ',
+                  'Create new account ',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 22,
                   ),
                 ),
-                GestureDetector(
+                InkWell(
                   onTap: () {
-                    Get.toNamed('/signup');
+                    Get.to(SignUpScreen());
                   },
-                  child: const Text(
-                    'Sign up',
-                    style: TextStyle(
-                      fontSize: 16,
-                      decoration: TextDecoration.underline,
-                      // Change to your desired color
+                  splashColor: Colors.black,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: h * 0.04,
+                    width: w * 0.2,
+                    decoration: BoxDecoration(
+                      color: Colors.black87,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        decoration: TextDecoration.underline,
+                        // Change to your desired color
+                      ),
                     ),
                   ),
                 ),

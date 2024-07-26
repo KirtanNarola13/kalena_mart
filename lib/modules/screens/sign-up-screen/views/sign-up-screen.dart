@@ -174,7 +174,7 @@ class SignUpScreen extends StatelessWidget {
                               s_passCon.clear();
                               s_conPassCon.clear();
 
-                              Get.to(AddressScreen());
+                              Get.to(const AddressScreen());
                             } else {}
                           },
                           child: GetBuilder<LoginController>(
@@ -219,15 +219,10 @@ class SignUpScreen extends StatelessWidget {
                         SizedBox(
                           height: h / 120,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: google,
-                              child: loginContainer(
-                                  img: 'assets/google.png', context: context),
-                            ),
-                          ],
+                        GestureDetector(
+                          onTap: google,
+                          child: loginContainer(
+                              img: 'assets/google.png', context: context),
                         ),
                       ],
                     ),
@@ -237,27 +232,44 @@ class SignUpScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'Already have an account? ',
+                      'Already have an account ? ',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 22,
                       ),
                     ),
-                    GestureDetector(
+                    InkWell(
                       onTap: () {
                         Get.to(LoginScreen());
                       },
-                      child: const Text(
-                        'Sign in',
-                        style: TextStyle(
-                          fontSize: 16,
-                          decoration: TextDecoration.underline,
+                      splashColor: Colors.black,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: h * 0.04,
+                        width: w * 0.2,
+                        decoration: BoxDecoration(
+                          color: Colors.black87,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
+                        child: const Text(
+                          "Sign In",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            decoration: TextDecoration.underline,
+                            // Change to your desired color
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: h / 50,
+                  height: h / 30,
                 ),
               ],
             ),
