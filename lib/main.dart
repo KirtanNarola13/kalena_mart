@@ -45,20 +45,20 @@ void main() async {
         ),
         GetPage(
           name: '/navbar',
-          page: () => NavBar(),
+          page: () => const NavBar(),
         ),
 
         GetPage(
           name: '/home',
-          page: () => HomePage(),
+          page: () => const HomePage(),
         ),
         GetPage(
           name: '/detail',
-          page: () => DetailPage(),
+          page: () => const DetailPage(),
         ),
         GetPage(
           name: '/cart',
-          page: () => CartScreen(),
+          page: () => const CartScreen(),
         ),
       ],
     ),

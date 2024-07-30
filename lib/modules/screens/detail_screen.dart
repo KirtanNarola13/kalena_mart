@@ -17,21 +17,18 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   @override
-
   @override
   Widget build(BuildContext context) {
     List args = ModalRoute.of(context)!.settings.arguments as List;
     Map<String, dynamic> data = {
-      'image' : args[0],
-      'name' : args[1],
-      'price' : args[2],
-      'mrp' : args[3],
-      'description' : args[4],
+      'image': args[0],
+      'name': args[1],
+      'price': args[2],
+      'mrp': args[3],
+      'description': args[4],
     };
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-
-
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -220,113 +217,106 @@ class _DetailPageState extends State<DetailPage> {
                   children: [
                     Expanded(
                       flex: 2,
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "${data['name']}",
-                              style: const TextStyle(
-                                letterSpacing: 2,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                              ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "${data['name']}",
+                            style: const TextStyle(
+                              letterSpacing: 2,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
                             ),
-                            Text(
-                              "${data['price']}",
-                              style: const TextStyle(
-                                letterSpacing: 2,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            )
-                          ],
-                        ),
+                          ),
+                          Text(
+                            "${data['price']}",
+                            style: const TextStyle(
+                              letterSpacing: 2,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          )
+                        ],
                       ),
                     ),
                     Expanded(
                       flex: 4,
-                      child: Container(
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: Container(
-                                child: Text(
-                                  "${data['description']}",
-                                  style: TextStyle(
-                                    color:
-                                        Colors.grey.shade700.withOpacity(0.8),
-                                    fontSize: 14,
-                                  ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              "${data['description']}",
+                              style: TextStyle(
+                                color: Colors.grey.shade700.withOpacity(
+                                  0.8,
                                 ),
+                                fontSize: 14,
                               ),
                             ),
-                            const Expanded(
-                              child: SizedBox(),
-                            ),
-                          ],
-                        ),
+                          ),
+                          const Expanded(
+                            child: SizedBox(),
+                          ),
+                        ],
                       ),
                     ),
                     Expanded(
                       flex: 2,
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                CherryToast.success(
-                                  title: const Text("Product Added"),
-                                ).show(context);
-                                CartModal cartModal = CartModal(
-                                  name: data['name'],
-                                  price: data['price'],
-                                  mrp: data['mrp'],
-                                  image: data['image'],
-                                  description: data['description'],
-                                );
-                                FireStoreHelper.fireStoreHelper
-                                    .cartProduct(cartModal);
-                                setState(() {});
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: height / 0.8,
-                                width: width / 2,
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    const BoxShadow(
-                                      color: Colors.grey,
-                                      blurRadius: 10,
-                                      blurStyle: BlurStyle.outer,
-                                    ),
-                                  ],
-                                  color: Colors.grey.shade500.withOpacity(0.3),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              CherryToast.success(
+                                title: const Text("Product Added"),
+                              ).show(context);
+                              CartModal cartModal = CartModal(
+                                name: data['name'],
+                                price: data['price'],
+                                mrp: data['mrp'],
+                                image: data['image'],
+                                description: data['description'],
+                              );
+                              FireStoreHelper.fireStoreHelper
+                                  .cartProduct(cartModal);
+                              setState(() {});
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: height / 0.8,
+                              width: width / 2,
+                              decoration: BoxDecoration(
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: 10,
+                                    blurStyle: BlurStyle.outer,
                                   ),
-                                  border: Border.all(
-                                    color: Colors.grey.shade700,
-                                    width: 2,
-                                  ),
+                                ],
+                                color: Colors.grey.shade500.withOpacity(0.3),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(20),
                                 ),
-                                child: Text(
-                                  (data['isBuy'] != true)
-                                      ? "Add to cart"
-                                      : "Remove",
-                                  style: TextStyle(
-                                    color: Colors.grey.shade700,
-                                    fontSize: 16,
-                                    letterSpacing: 5,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                border: Border.all(
+                                  color: Colors.grey.shade700,
+                                  width: 2,
+                                ),
+                              ),
+                              child: Text(
+                                (data['isBuy'] != true)
+                                    ? "Add to cart"
+                                    : "Remove",
+                                style: TextStyle(
+                                  color: Colors.grey.shade700,
+                                  fontSize: 16,
+                                  letterSpacing: 5,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

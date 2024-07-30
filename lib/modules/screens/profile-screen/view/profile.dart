@@ -1,10 +1,8 @@
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kalena_mart/constants/string.dart';
 import 'package:kalena_mart/modules/screens/address-screen/view/const/address_const.dart';
 import 'package:kalena_mart/utils/firestore_helper.dart';
 import 'package:line_icons/line_icons.dart';
@@ -27,39 +25,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       AuthHelper.authHelper.signOut();
       Get.toNamed('/login');
     }
-
-    void _showChangePhoneNumberDialog() {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text("Edit Phone Number"),
-            content: Container(
-              height: height * 0.3,
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: moNumberController,
-                    decoration: const InputDecoration(
-                      labelText: 'New Phone Number',
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      // _updatePhoneNumber(phoneNumberController.text);
-                      Navigator.pop(context); // Close the dialog
-                    },
-                    child: const Text("Update"),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      );
-    }
-
     void _showChangeAddressDialog() {
       showDialog(
         context: context,
