@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,9 +16,10 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   @override
-  @override
   Widget build(BuildContext context) {
+
     List args = ModalRoute.of(context)!.settings.arguments as List;
+
     Map<String, dynamic> data = {
       'image': args[0],
       'name': args[1],
@@ -39,7 +39,9 @@ class _DetailPageState extends State<DetailPage> {
               flex: 2,
               child: Container(
                 alignment: Alignment.center,
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(
+                  10,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -188,16 +190,23 @@ class _DetailPageState extends State<DetailPage> {
             Expanded(
               flex: 18,
               child: Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                margin: const EdgeInsets.symmetric(
+                  vertical: 15,
+                  horizontal: 10,
+                ),
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage("${data['image']}"),
+                    image: NetworkImage(
+                      "${data['image']}",
+                    ),
                   ),
                   borderRadius: const BorderRadius.all(
                     Radius.circular(20),
                   ),
-                  border: Border.all(color: Colors.grey.shade700, width: 2),
+                  border: Border.all(
+                    color: Colors.grey.shade700,
+                    width: 2,
+                  ),
                 ),
               ),
             ),
@@ -206,11 +215,20 @@ class _DetailPageState extends State<DetailPage> {
               child: Container(
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade700, width: 2),
-                  color: Colors.grey.shade200.withOpacity(0.1),
+                  border: Border.all(
+                    color: Colors.grey.shade700,
+                    width: 2,
+                  ),
+                  color: Colors.grey.shade200.withOpacity(
+                    0.1,
+                  ),
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
+                    topLeft: Radius.circular(
+                      20,
+                    ),
+                    topRight: Radius.circular(
+                      20,
+                    ),
                   ),
                 ),
                 child: Column(

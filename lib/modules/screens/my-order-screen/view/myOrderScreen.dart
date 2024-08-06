@@ -168,7 +168,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "My Orders",
           // style: Theme.of(context).textTheme.headline6,
         ),

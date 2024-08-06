@@ -224,20 +224,20 @@ class LoginScreen extends StatelessWidget {
                     Get.to(SignUpScreen());
                   },
                   splashColor: Colors.black,
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(10),
                   ),
                   child: Container(
                     alignment: Alignment.center,
                     height: h * 0.04,
                     width: w * 0.2,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.black87,
                       borderRadius: BorderRadius.all(
                         Radius.circular(15),
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       "Sign Up",
                       style: TextStyle(
                         fontSize: 16,

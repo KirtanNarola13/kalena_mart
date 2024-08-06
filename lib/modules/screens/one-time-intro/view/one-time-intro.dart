@@ -54,9 +54,11 @@ class _HomePageState extends State<IntroScreen> {
         children: <Widget>[
           PageView(
             onPageChanged: (int page) {
-              setState(() {
-                currentIndex = page;
-              });
+              setState(
+                () {
+                  currentIndex = page;
+                },
+              );
             },
             controller: _pageController,
             children: <Widget>[

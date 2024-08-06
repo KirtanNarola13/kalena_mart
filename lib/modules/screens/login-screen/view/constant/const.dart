@@ -3,8 +3,10 @@
 import 'dart:developer';
 
 import 'package:cherry_toast/cherry_toast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kalena_mart/modules/screens/address-screen/view/address_screen.dart';
 
 import '../../../../../utils/auth-helper.dart';
@@ -28,11 +30,17 @@ signUp({required String email, required String password}) async {
   Map<String, dynamic> res =
       await AuthHelper.authHelper.signUp(signUpModel: signUpModel);
   if (res['error'] != null) {
-    log('signup failed');
+    log(
+      'signup failed',
+    );
   } else {
-    log('user created');
+    log(
+      'user created',
+    );
 
-    Get.to(AddressScreen());
+    Get.to(
+      const AddressScreen(),
+    );
   }
 }
 
@@ -44,25 +52,60 @@ login(
   SignUpModel signUpModel = SignUpModel(email: email, password: password);
   Map<String, dynamic> res =
       await AuthHelper.authHelper.login(signUpModel: signUpModel);
+
   if (res['error'] != null) {
     return CherryToast.error(
-      title: const Text("Login Failed"),
+      title: const Text(
+        "Login Failed",
+      ),
     ).show(context);
   } else {
-    Get.offAllNamed('/navbar');
+    Get.offAllNamed(
+      '/navbar',
+    );
     FireStoreHelper.fireStoreHelper.addUser();
   }
 }
 
+final GoogleSignIn _googleSignIn = GoogleSignIn();
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
 google() async {
-  Map<String, dynamic> res = await AuthHelper.authHelper.signInWithGoogle();
-  if (res['error'] != null) {
-    return log('login failed');
-  } else {
-    Get.offAllNamed('/navbar');
-    FireStoreHelper.fireStoreHelper.addUser();
+  try {
+    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+    if (googleUser == null) {
+      // User canceled the sign-in
+      return;
+    }
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    final UserCredential userCredential = await _auth.signInWithCredential(credential);
+    final User? user = userCredential.user;
+
+    if (user != null) {
+      Get.offAllNamed('/navbar');
+      FireStoreHelper.fireStoreHelper.addUser();
+    }
+  } catch (e) {
+    log('Google sign-in failed: $e');
+    CherryToast.error(
+      title: const Text("Google Sign-In Failed"),
+    ).show(Get.context!);
   }
 }
+
+// google() async {
+//   Map<String, dynamic> res = await AuthHelper.authHelper.signInWithGoogle();
+//   if (res['error'] != null) {
+//     return log('login failed');
+//   } else {
+//     Get.offAllNamed('/navbar');
+//     FireStoreHelper.fireStoreHelper.addUser();
+//   }
+// }
 
 Stack loginStack() => Stack(
       alignment: Alignment.center,

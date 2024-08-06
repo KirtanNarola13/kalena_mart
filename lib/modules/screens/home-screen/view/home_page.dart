@@ -278,7 +278,8 @@ class _HomePageState extends State<HomePage> {
   List _resultList = [];
   String selectedCategory = 'All'; // Add a variable for selected category
 
-  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getAllCategories() async {
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
+      getAllCategories() async {
     // Fetch categories from Firestore
     var data = await FirebaseFirestore.instance.collection('category').get();
     return data.docs;
@@ -287,9 +288,11 @@ class _HomePageState extends State<HomePage> {
   Future<void> getAllProducts() async {
     // Fetch products from Firestore
     var data = await FirebaseFirestore.instance.collection('products').get();
-    setState(() {
-      _allResult = data.docs;
-    });
+    setState(
+      () {
+        _allResult = data.docs;
+      },
+    );
     searchResultList();
   }
 
@@ -309,7 +312,8 @@ class _HomePageState extends State<HomePage> {
       for (var productSnapshot in _allResult) {
         var name = productSnapshot['name'].toString().toLowerCase();
         if (name.contains(searchController.text.toLowerCase())) {
-          if (selectedCategory == 'All' || productSnapshot['category'] == selectedCategory) {
+          if (selectedCategory == 'All' ||
+              productSnapshot['category'] == selectedCategory) {
             showResult.add(productSnapshot);
           }
         }
@@ -317,7 +321,9 @@ class _HomePageState extends State<HomePage> {
     } else {
       showResult = List.from(_allResult);
       if (selectedCategory != 'All') {
-        showResult = showResult.where((product) => product['category'] == selectedCategory).toList();
+        showResult = showResult
+            .where((product) => product['category'] == selectedCategory)
+            .toList();
       }
     }
 
@@ -344,29 +350,41 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Select Category'),
+          title: const Text(
+            'Select Category',
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ...categories.map((category) {
-                return ListTile(
-                  title: Text(category['name']),
-                  onTap: () {
-                    setState(() {
-                      selectedCategory = category['name'];
-                      Navigator.of(context).pop();
-                    });
-                    searchResultList(); // Update the list based on selected category
-                  },
-                );
-              }).toList(),
+              ...categories.map(
+                (category) {
+                  return ListTile(
+                    title: Text(
+                      category['name'],
+                    ),
+                    onTap: () {
+                      setState(
+                        () {
+                          selectedCategory = category['name'];
+                          Navigator.of(context).pop();
+                        },
+                      );
+                      searchResultList(); // Update the list based on selected category
+                    },
+                  );
+                },
+              ),
               ListTile(
-                title: const Text('All'),
+                title: const Text(
+                  'All',
+                ),
                 onTap: () {
-                  setState(() {
-                    selectedCategory = 'All';
-                    Navigator.of(context).pop();
-                  });
+                  setState(
+                    () {
+                      selectedCategory = 'All';
+                      Navigator.of(context).pop();
+                    },
+                  );
                   searchResultList(); // Show all products
                 },
               ),
@@ -418,8 +436,12 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: height / 50),
               Center(
                 child: Container(
-                  padding: EdgeInsets.only(left: 10),
-                  margin: EdgeInsets.only(bottom: 5),
+                  padding: const EdgeInsets.only(
+                    left: 10,
+                  ),
+                  margin: const EdgeInsets.only(
+                    bottom: 5,
+                  ),
                   height: height / 16,
                   width: width / 1.2,
                   decoration: BoxDecoration(
@@ -442,7 +464,7 @@ class _HomePageState extends State<HomePage> {
                         width: width / 1.5,
                         child: TextFormField(
                           controller: searchController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Search product',
                             border: InputBorder.none,
                           ),
@@ -452,7 +474,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: height * 0.7,
                 child: ListView.builder(
                   itemCount: _resultList.length,
@@ -469,13 +491,21 @@ class _HomePageState extends State<HomePage> {
                         ]);
                       },
                       child: Container(
-                        margin: const EdgeInsets.only(left: 20, bottom: 10, right: 20),
+                        margin: const EdgeInsets.only(
+                          left: 20,
+                          bottom: 10,
+                          right: 20,
+                        ),
                         width: width * 0.9,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20),
+                            topLeft: Radius.circular(
+                              20,
+                            ),
+                            bottomRight: Radius.circular(
+                              20,
+                            ),
                           ),
                           border: Border.all(
                             color: Colors.grey,
@@ -486,11 +516,15 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              margin: EdgeInsets.all(10),
+                              margin: const EdgeInsets.all(
+                                10,
+                              ),
                               height: height * 0.25,
                               decoration: BoxDecoration(
                                 borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(20),
+                                  topLeft: Radius.circular(
+                                    20,
+                                  ),
                                 ),
                                 image: DecorationImage(
                                   image: NetworkImage(
@@ -499,11 +533,16 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: height * 0.02),
+                            SizedBox(
+                              height: height * 0.02,
+                            ),
                             Padding(
-                              padding: const EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(
+                                10,
+                              ),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
@@ -512,16 +551,21 @@ class _HomePageState extends State<HomePage> {
                                       color: Colors.grey.shade700,
                                     ),
                                   ),
-                                  const SizedBox(height: 5),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
                                   Text(
                                     productData['description'],
                                     style: TextStyle(
                                       color: Colors.grey.shade700,
                                     ),
                                   ),
-                                  const SizedBox(height: 5),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         "₹ ${productData['price']}",
@@ -534,7 +578,8 @@ class _HomePageState extends State<HomePage> {
                                         style: const TextStyle(
                                           color: Colors.grey,
                                           fontSize: 12,
-                                          decoration: TextDecoration.lineThrough,
+                                          decoration:
+                                              TextDecoration.lineThrough,
                                         ),
                                       ),
                                     ],

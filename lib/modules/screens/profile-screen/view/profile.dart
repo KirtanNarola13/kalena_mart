@@ -25,13 +25,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       AuthHelper.authHelper.signOut();
       Get.toNamed('/login');
     }
-    void _showChangeAddressDialog() {
+
+    void showChangeAddressDialog() {
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text("Edit Address"),
-            content: Container(
+            title: const Text(
+              "Edit Address",
+            ),
+            content: SizedBox(
               height: height * 0.3,
               child: Column(
                 children: [
@@ -83,7 +86,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Container(
                     decoration: const BoxDecoration(
                         image: DecorationImage(
-                      image: AssetImage('assets/bg_avatar.png'),
+                      image: AssetImage(
+                        'assets/bg_avatar.png',
+                      ),
                       fit: BoxFit.cover,
                     )),
                     child: Column(
@@ -91,7 +96,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Expanded(
                           flex: 2,
                           child: Padding(
-                            padding: const EdgeInsets.all(10.0),
+                            padding: const EdgeInsets.all(
+                              10.0,
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -117,8 +124,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     onPressed: () {
                                       logout();
                                     },
-                                    icon:
-                                        const Icon(LineIcons.alternateSignOut),
+                                    icon: const Icon(
+                                      LineIcons.alternateSignOut,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -244,7 +252,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            "$userEmail",
+                                            userEmail,
                                             style: TextStyle(
                                               fontSize: 15,
                                               color: Colors.grey.shade700,
@@ -294,28 +302,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         left: 10, top: 5, bottom: 5),
                                     child: Column(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                          MainAxisAlignment.spaceAround,
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Expanded(
                                           child: Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment
-                                                .spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               const Text(
                                                 "Address",
                                                 style: TextStyle(
-                                                  fontWeight:
-                                                  FontWeight.bold,
+                                                  fontWeight: FontWeight.bold,
                                                   fontSize: 16,
                                                   letterSpacing: 1.5,
                                                 ),
                                               ),
                                               IconButton(
                                                 onPressed: () {
-                                                  _showChangeAddressDialog();
+                                                  showChangeAddressDialog();
                                                 },
                                                 icon: const Icon(
                                                   Icons.edit,
@@ -326,14 +332,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                         ),
                                         Expanded(
-                                          child: Container(
+                                          child: SizedBox(
                                             height: height * 0.3,
                                             child: Text(
-                                              "${userAddress}",
+                                              userAddress,
                                               style: TextStyle(
                                                 fontSize: 15,
-                                                color:
-                                                Colors.grey.shade700,
+                                                color: Colors.grey.shade700,
                                               ),
                                             ),
                                           ),
@@ -345,7 +350,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ],
                             ),
                           ),
-
                         ],
                       ),
                     ),
