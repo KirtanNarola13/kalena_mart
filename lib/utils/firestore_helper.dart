@@ -27,6 +27,8 @@ class FireStoreHelper {
       'dp': (AuthHelper.auth.currentUser?.photoURL == null)
           ? "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
           : AuthHelper.auth.currentUser?.photoURL,
+      'address': '',
+      'phoneNumber': '',
     });
     log(
       "User Added",
@@ -141,38 +143,41 @@ class FireStoreHelper {
     }
   }
 
-  Future<void> createOrder(String address, int number, String email,
-
-      String userId, List<Map<String, dynamic>> cartProducts) async {
-    CollectionReference orders = FirebaseFirestore.instance.collection('orders');
-
-    await orders.add(
-      {
-        'address': address,
-        'number': number,
-        'email': email,
-        'userId': userId,
-        'products': cartProducts,
-        'name': "${AuthHelper.auth.currentUser?.email!.split("@")[0].capitalize!}"
-      },
-    );
-  }
+  // Future<void> createOrder(String address, int number, String email,
+  //     String userId, List<Map<String, dynamic>> cartProducts) async {
+  //   CollectionReference orders =
+  //       FirebaseFirestore.instance.collection('orders');
+  //
+  //   await orders.add(
+  //     {
+  //       'address': address,
+  //       'number': number,
+  //       'email': email,
+  //       'userId': userId,
+  //       'products': cartProducts,
+  //       'name':
+  //           "${AuthHelper.auth.currentUser?.email!.split("@")[0].capitalize!}"
+  //     },
+  //   );
+  // }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> fetchOrders() {
     return FirebaseFirestore.instance.collection('orders').snapshots();
   }
 
-  // Future<void> createOrder(String address, int number, String email, String userId, List<Map<String, dynamic>> cartProducts) async {
-  //   CollectionReference orders = firestore.collection('orders');
-  //   await orders.add({
-  //     'address': address,
-  //     'number': number,
-  //     'email': email,
-  //     'userId': userId,
-  //     'products': cartProducts,
-  //     'name': "${AuthHelper.auth.currentUser?.email?.split("@")[0].capitalizeFirst}"
-  //   });
-  // }
+  Future<void> createOrder(String address, int number, String email,
+      String userId, List<Map<String, dynamic>> cartProducts) async {
+    CollectionReference orders = firestore.collection('orders');
+    await orders.add({
+      'address': address,
+      'number': number,
+      'email': email,
+      'userId': userId,
+      'products': cartProducts,
+      'name':
+          "${AuthHelper.auth.currentUser?.email?.split("@")[0].capitalizeFirst}"
+    });
+  }
 
   Future<void> changeAddress({required String address}) async {
     await firestore

@@ -77,12 +77,14 @@ google() async {
       // User canceled the sign-in
       return;
     }
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    final UserCredential userCredential = await _auth.signInWithCredential(credential);
+    final UserCredential userCredential =
+        await _auth.signInWithCredential(credential);
     final User? user = userCredential.user;
 
     if (user != null) {

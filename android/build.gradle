@@ -1,20 +1,27 @@
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = '1.8.0' // Update to a more recent version if needed
     repositories {
         google()
         mavenCentral()
     }
-
     dependencies {
-        // AGP version is set in settings.gradle.
+        classpath "com.android.tools.build:gradle:8.1.0" // Update to match your Gradle plugin version
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        // Other dependencies
     }
 }
+
 
 allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17) // or 1.8 for Java 8
     }
 }
 

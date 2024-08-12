@@ -197,7 +197,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                             Container(
                               alignment: Alignment.center,
                               margin: const EdgeInsets.all(10),
-                              height: height * 0.2,
+                              height: height * 0.35,
                               decoration: BoxDecoration(
                                 color: Colors.grey.shade300,
                                 borderRadius:

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kalena_mart/modules/screens/cart-screen/view/cart.dart';
-import 'package:kalena_mart/modules/screens/favorite-screen/view/favorite.dart';
 import 'package:kalena_mart/modules/screens/home-screen/view/home_page.dart';
 import 'package:kalena_mart/modules/screens/profile-screen/view/profile.dart';
 

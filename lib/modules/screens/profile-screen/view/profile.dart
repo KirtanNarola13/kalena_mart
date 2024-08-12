@@ -1,11 +1,14 @@
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kalena_mart/constants/string.dart';
 import 'package:kalena_mart/modules/screens/address-screen/view/const/address_const.dart';
 import 'package:kalena_mart/utils/firestore_helper.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../utils/auth-helper.dart';
 
@@ -26,15 +29,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
       Get.toNamed('/login');
     }
 
-    void showChangeAddressDialog() {
+    void _showChangePhoneNumberDialog() {
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text(
-              "Edit Address",
+            title: const Text("Edit Phone Number"),
+            content: Container(
+              height: height * 0.3,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: moNumberController,
+                    decoration: const InputDecoration(
+                      labelText: 'New Phone Number',
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      // _updatePhoneNumber(phoneNumberController.text);
+                      Navigator.pop(context); // Close the dialog
+                    },
+                    child: const Text("Update"),
+                  ),
+                ],
+              ),
             ),
-            content: SizedBox(
+          );
+        },
+      );
+    }
+
+    void _showChangeAddressDialog() {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Edit Address"),
+            content: Container(
               height: height * 0.3,
               child: Column(
                 children: [
@@ -86,9 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Container(
                     decoration: const BoxDecoration(
                         image: DecorationImage(
-                      image: AssetImage(
-                        'assets/bg_avatar.png',
-                      ),
+                      image: AssetImage('assets/bg_avatar.png'),
                       fit: BoxFit.cover,
                     )),
                     child: Column(
@@ -96,9 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Expanded(
                           flex: 2,
                           child: Padding(
-                            padding: const EdgeInsets.all(
-                              10.0,
-                            ),
+                            padding: const EdgeInsets.all(10.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -124,9 +153,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     onPressed: () {
                                       logout();
                                     },
-                                    icon: const Icon(
-                                      LineIcons.alternateSignOut,
-                                    ),
+                                    icon:
+                                        const Icon(LineIcons.alternateSignOut),
                                   ),
                                 ),
                               ],
@@ -203,7 +231,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Container(
                             margin: const EdgeInsets.only(top: 20),
                             padding: const EdgeInsets.all(10),
-                            height: height * 0.09,
+                            height: height * 0.12,
                             width: width / 1.1,
                             decoration: const BoxDecoration(
                               borderRadius: BorderRadius.all(
@@ -252,7 +280,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            userEmail,
+                                            "$userEmail",
                                             style: TextStyle(
                                               fontSize: 15,
                                               color: Colors.grey.shade700,
@@ -321,7 +349,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               ),
                                               IconButton(
                                                 onPressed: () {
-                                                  showChangeAddressDialog();
+                                                  _showChangeAddressDialog();
                                                 },
                                                 icon: const Icon(
                                                   Icons.edit,
@@ -332,13 +360,91 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                         ),
                                         Expanded(
-                                          child: SizedBox(
+                                          child: Container(
                                             height: height * 0.3,
                                             child: Text(
-                                              userAddress,
+                                              "${userAddress}",
                                               style: TextStyle(
                                                 fontSize: 15,
                                                 color: Colors.grey.shade700,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 20),
+                            padding: const EdgeInsets.all(10),
+                            height: height * 0.13,
+                            width: width / 1.1,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    margin: const EdgeInsets.all(5),
+                                    alignment: Alignment.center,
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                      color: Colors.white,
+                                    ),
+                                    child: const Icon(
+                                      LineIcons.whatSApp,
+                                      size: 35,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 4,
+                                  child: Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, top: 5, bottom: 5),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Expanded(
+                                          child: Text(
+                                            "+91 79841 80938",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                              letterSpacing: 1.5,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            height: height * 0.3,
+                                            child: TextButton(
+                                              onPressed: () {
+                                                launchUrl(
+                                                  Uri(
+                                                    scheme: "https",
+                                                    path:
+                                                        "wa.me/917984180938?text='I want to talk about Kalena Mart'",
+                                                  ),
+                                                );
+                                              },
+                                              child: const Text(
+                                                "contact",
+                                                style: TextStyle(
+                                                    color: Colors.blue),
                                               ),
                                             ),
                                           ),

@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -57,22 +56,33 @@ class AuthHelper {
   Future<Map<String, dynamic>> signInWithGoogle() async {
     Map<String, dynamic> res = {};
     try {
-      //
+      // Initiate the sign-in flow
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-      //
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-      //
-      final cradential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
+
+      if (googleUser == null) {
+        // The user canceled the sign-in process
+        res['error'] = 'sign_in_canceled';
+        return res;
+      }
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
       );
-      //
+
+      // Sign in to Firebase with the new credential
       UserCredential userCredential =
-          await auth.signInWithCredential(cradential);
+          await auth.signInWithCredential(credential);
       res['user'] = userCredential.user;
     } on FirebaseAuthException catch (e) {
       res['error'] = e.code;
+    } catch (e) {
+      res['error'] = e.toString();
     }
     return res;
   }

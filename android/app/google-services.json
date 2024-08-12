@@ -14,14 +14,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "507661018958-r76r8ffj1ib41o1t3pa3eq9tjfo19qrn.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.kalena_admin",
-            "certificate_hash": "7b6da0797fa913ee1bb5b1bc09cfb99a2c5e185c"
-          }
-        },
-        {
           "client_id": "507661018958-7sonm85bf8t6gsn67au7oiqnvq2rvqtv.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -57,6 +49,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "507661018958-3p3t7opvk5d1a3hq0lk2ql14jj7jbjgg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kalena_mart",
+            "certificate_hash": "9d7fa784a232d8acb39b3fee2f77c1b685891333"
+          }
+        },
         {
           "client_id": "507661018958-7sonm85bf8t6gsn67au7oiqnvq2rvqtv.apps.googleusercontent.com",
           "client_type": 3

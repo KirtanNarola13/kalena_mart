@@ -7,7 +7,6 @@ import 'package:kalena_mart/modules/screens/detail_screen.dart';
 import 'package:kalena_mart/modules/screens/home-screen/view/home_page.dart';
 import 'package:kalena_mart/modules/screens/navbar/navbar.dart';
 import 'package:kalena_mart/modules/screens/sign-up-screen/views/sign-up-screen.dart';
-
 import 'firebase_options.dart';
 import 'modules/screens/login-screen/view/login-screen.dart';
 import 'modules/screens/splash-screen/view/splash_screen.dart';
@@ -20,7 +19,6 @@ void main() async {
   );
 
   runApp(
-
     GetMaterialApp(
       theme: ThemeData(
           useMaterial3: true, textTheme: GoogleFonts.openSansTextTheme()),
